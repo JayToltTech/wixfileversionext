@@ -33,8 +33,23 @@ namespace WixFileVersionExtension
                     if (propertyInfo == null)
                         throw new ArgumentException(string.Format("Unable to find property {0} in FileVersionInfo", function));
 
-                    var value = propertyInfo.GetValue(fileVersionInfo, null);
-                    return value.ToString(); ;
+                    var value = (string)propertyInfo.GetValue(fileVersionInfo, null);
+
+                    if (function == "FileVersion")
+                    {
+                        var split = value.Split('.');
+
+                        // Check for an overly large major and split it apart if needed
+                        var major = split[0];
+                        if (Int32.Parse(major) > 256)
+                        {
+                            var m1 = major.Substring(0, major.Length - 2);
+                            var m2 = major.Substring(major.Length - 2, 2);
+                            return $"{m1}.{m2}.{split[1]}.{split[2]}";
+                        }
+                    }
+
+                    return value; ;
             }
 
             return null;

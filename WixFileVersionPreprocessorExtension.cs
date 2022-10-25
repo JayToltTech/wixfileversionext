@@ -8,7 +8,7 @@ using Microsoft.Tools.WindowsInstallerXml;
 namespace WixFileVersionExtension
 {
     public class WixFileVersionPreprocessorExtension : PreprocessorExtension
-    {        
+    {
         private static readonly string[] prefixes = { "fileVersion" };
 
         public override string[] Prefixes
@@ -49,7 +49,7 @@ namespace WixFileVersionExtension
                         }
                     }
 
-                    return value; ;
+                    return value;
             }
 
             return null;

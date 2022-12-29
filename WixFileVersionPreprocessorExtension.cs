@@ -28,11 +28,8 @@ namespace WixFileVersionExtension
                         throw new ArgumentException(string.Format("File name {0} does not exist", args[0]));
 
                     FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(args[0]);
-                    PropertyInfo propertyInfo = fileVersionInfo.GetType().GetProperty(function);
-
-                    if (propertyInfo == null)
-                        throw new ArgumentException(string.Format("Unable to find property {0} in FileVersionInfo", function));
-
+                    PropertyInfo propertyInfo = fileVersionInfo.GetType().GetProperty(function)
+                        ?? throw new ArgumentException(string.Format("Unable to find property {0} in FileVersionInfo", function));
                     var value = (string)propertyInfo.GetValue(fileVersionInfo, null);
 
                     if (function == "FileVersion")
